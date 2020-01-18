@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { MovieService } from './movie.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'movie-app';
+  movie$;
+  constructor(private movieService: MovieService){}
+
+  // fetchMovie() {
+  //   this.movie$ = this.movieService.fetchMovie();
+  // }
 }
