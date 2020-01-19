@@ -1,10 +1,43 @@
-<input
-    (keyup)="searchTerm$.next($event.target.value)">
+<div class="container">
+  <h1>Search for Movies</h1>
+  <form (ngSubmit)="onSubmit()" #SearchPage="ngForm">
+    <div class="form-group">
+      <label for="movie">Name</label>
+      <input type="text" class="form-control" (keyup)="searchTerm$.next($event.target.value)" minlength="3" pattern="^[A-Za-z0-9 ]*$" ngModel name="movie" #movie="ngModel" required SearchPageComponent.customValidation >
+    </div>
+    <div *ngIf="movie.invalid && (movie.dirty || movie.touched)"
+    class="alert alert-danger">
+        <div *ngIf="movie.errors.required">
+            Movie Name is required.
+        </div>
+        <div *ngIf="movie.errors.minlength">
+            Movies' Name must be at least 3 characters long.
+        </div>
+        <div *ngIf="movie.errors.pattern">
+            Movies' Name accepts only alphanumerics characters.
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!searchPage.form.valid">Submit</button>
+      <!-- <button type="button" class="btn btn-default" (click)="newHero(); SearchPage.reset()">New Hero</button> -->
+  </form>
+</div>
+<div class="row" *ngIf="results">
+    <div class="col-sm-12" *ngFor="let result of results | keyvalue; let num = index">
+        <!-- <img class="mr-3" [src]="getImageUrl(num)"> -->
+        <!-- <a [routerLink]="movie">Photo {{num}}</a> -->
+            <h2>Movie #{{num}}: {{ movieTitle }} </h2>
+            <div class="flexbox">
+                <span>{{ moviePosterPath }}</span>
+                <span>{{ movieVoteAverage }}</span>
+            </div>
+    </div>
+</div>
 
-<ul *ngIf="results">
-  <li *ngFor="let result of results">
-    <a href="{{ result.page }}" target="_blank">
-      {{ result.page }}
-    </a>
-  </li>
-</ul>
+<app-pagination
+[setPagination]="{
+  'itemsCount': totalUsersAmount,
+  'pageSize': 10
+}"
+(goToPage)="goToPage($event)"
+></app-pagination>
+

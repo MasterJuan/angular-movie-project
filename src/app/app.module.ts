@@ -1,5 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+
+// Ng Bootstrap Module
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -13,10 +17,20 @@ import { GuiComponent } from './gui/gui.component';
 import { MovieService } from './movie.service';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { SearchAndPaginationModule } from './search-and-pagination/search-and-pagination.module';
-
+import { ModalContainerComponent } from './modal-container.component';
+import { MovieComponent } from './movie/movie.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
-  { path: '', component: SearchPageComponent },
+  // #1 approach: This must be the home (default) page of the application
+  //{ path: '', component: SearchPageComponent },
+  
+  // #2 approach: This must be the home (default) page of the application
+  { path: 'search-page', component: SearchPageComponent },
+  { path: '', redirectTo: '/search-page', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent },
+
+  { path: 'movie/:id', component: ModalContainerComponent},
   { path: 'gui', component: GuiComponent},
 ];
 
@@ -25,17 +39,23 @@ const appRoutes: Routes = [
     AppComponent,
     //TypographyComponent,
     GuiComponent,
-    SearchPageComponent
+    SearchPageComponent,
+    MovieComponent,
+    ModalContainerComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),					
+    RouterModule.forRoot(appRoutes,
+      //{ enableTracing: true } // <-- debugging purposes only
+    ),					
     BrowserAnimationsModule,
     MaterialModule,
-    SearchAndPaginationModule
+    SearchAndPaginationModule,
+    NgbModule,
+    AppRoutingModule,
   ],
   providers: [ MovieService ],
   bootstrap: [AppComponent]

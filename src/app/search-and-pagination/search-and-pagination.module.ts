@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SearchInputComponent } from '../search-input/search-input.component';
 
@@ -11,7 +11,8 @@ import { SearchInputComponent } from '../search-input/search-input.component';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     SearchInputComponent,
