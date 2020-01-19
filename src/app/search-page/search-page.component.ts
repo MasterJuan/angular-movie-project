@@ -49,28 +49,28 @@ export class SearchPageComponent implements OnInit {
   private _currentSearchValue: string = '';
 
   ngOnInit() {
-    // this._loadMovies(
-    //   this._currentPage,
-    //   this._currentSearchValue
-    // );
+    this._loadMovies(
+      this._currentPage,
+      this._currentSearchValue
+    );
   }
-  // public filterList(searchParam: string): void {
-  //   this._currentSearchValue = searchParam;
-  //   this._loadMovies(
-  //     this._currentPage,
-  //     this._currentSearchValue
-  //   );
-  // }
-  // public goToPage(page: number): void {
-  //   this._currentPage = page;
-  //   this._loadMovies(
-  //     this._currentPage,
-  //     this._currentSearchValue
-  //   );
-  // }
-  // private _loadMovies(
-  //   page: number = 1, searchParam: string = '' 
-  // ) {
+  public filterList(searchParam: string): void {
+    this._currentSearchValue = searchParam;
+    this._loadMovies(
+      this._currentPage,
+      this._currentSearchValue
+    );
+  }
+  public goToPage(page: number): void {
+    this._currentPage = page;
+    this._loadMovies(
+      this._currentPage,
+      this._currentSearchValue
+    );
+  }
+  private _loadMovies(
+    page: number = 1, searchParam: string = '' 
+  ) { }
   //   this.searchService.getUsers(
   //     page, searchParam
   //   ).subscribe((response) => {
@@ -94,14 +94,15 @@ export class SearchPageComponent implements OnInit {
         // }
         this.response = response;
         this.results = response['results'];
+        console.log(this.results);
         for ( let i = 1; i < this.results.length; i++ ) {
           this.moviePosterPath = this.results[i]['poster_path'];
           this.movieTitle = this.results[i]['title'];
           this.movieVoteAverage = this.results[i]['vote_average'];
+          console.log(this.moviePosterPath);
+          console.log(this.movieTitle);
+          console.log(this.movieVoteAverage);
         }
-        console.log(this.moviePosterPath);
-        console.log(this.movieTitle);
-        console.log(this.movieVoteAverage);
       });
   } 
 
